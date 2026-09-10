@@ -15,7 +15,7 @@ const appData = {
     },
     "server": {
         "port": 443,
-        "host": "gameserver.connectapp.dpdns.org"
+        "host": "masterserver.connectapp.dpdns.org"
     }
 }
 const websocket = new WebSocket(`ws://${appData.server.host}:${appData.server.port}`)
