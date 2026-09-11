@@ -18,7 +18,7 @@ const appData = {
         "host": "masterserver.connectapp.dpdns.org"
     }
 }
-const websocket = new WebSocket(`ws://${appData.server.host}:${appData.server.port}`)
+const websocket = new WebSocket(`wss://${appData.server.host}:${appData.server.port}`)
 websocket.onopen = () => {
         console.log(`Conexión establecida con el servidor!`.green)
     setTimeout(() => {
