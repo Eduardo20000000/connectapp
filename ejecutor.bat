@@ -25,8 +25,4 @@ echo.
 
 node app.js
 
-echo.
-echo ========================================
-echo       Aplicacion finalizada
-echo ========================================
 pause
