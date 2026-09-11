@@ -53,7 +53,7 @@ El archivo `ejecutor.bat` se encargará automáticamente de:
 * Preparar las dependencias del proyecto.
 * Ejecutar `app.js`.
 
-Todo a un click desde la comodidad de tu hogar.
+Todo a un Enter desde la comodidad de tu hogar.
 
 ---
 
