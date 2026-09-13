@@ -34,6 +34,12 @@ websocket.onopen = () => {
 
     }, 3000)
 }
+websocket.onclose = (event) => {
+       console.warn(
+            `WebSocket cerrado | código: ${event.code} | motivo: ${event.reason}`
+        );
+
+}
  websocket.onmessage = (event) => {
         let message = JSON.parse(event.data)
         if(message.msgType === 4){
@@ -55,7 +61,7 @@ websocket.onopen = () => {
           console.log(`${"=".repeat(message.data.message.length)}\n${message.data.message}`.green)
         }
          if(message.msgType === 7){
-             handleMouseMovement(websocket, message, message.data)
+             handleMouseMovement(websocket, message)
             
         }
         if(message.msgType === 8){
