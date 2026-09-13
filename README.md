@@ -55,6 +55,8 @@ El archivo `ejecutor.bat` se encargará automáticamente de:
 
 Todo a un Enter desde la comodidad de tu hogar.
 
+### En caso de haber instalado ya los paquetes necesarios puedes utilizar `ejecutor_rápido.bat`
+
 ---
 
 # 3. Vincular tu celular
