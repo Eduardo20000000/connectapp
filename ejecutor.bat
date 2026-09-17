@@ -1,4 +1,6 @@
 @echo off
+cls
+
 title Control Remoto - Iniciando...
 
 echo ========================================
