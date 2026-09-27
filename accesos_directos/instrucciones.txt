@@ -1,0 +1,1 @@
+Crea accesos directos desde tu computador y subelos a esta carpeta, cambiado el modo de ConnectApp podrás abrir estos accesos desde tu celular.
