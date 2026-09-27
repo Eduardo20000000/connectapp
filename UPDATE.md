@@ -77,9 +77,39 @@ Y no.
 
 La actualización más grande hasta el momento.
 
-ConnectApp incorpora **tres modos de uso**, cada uno pensado para diferentes situaciones.
+ConnectApp incorpora **tres modos de uso**, un nuevo método de vinculación mediante **QR** y diversas correcciones internas.
 
 Porque aparentemente un solo mouse táctil no era suficiente.
+
+---
+
+# 📲 Nuevos métodos de vinculación
+
+ConnectApp incorpora una nueva forma de conectar el celular con el computador mediante **códigos QR**, manteniendo también el método convencional mediante código.
+
+### 📷 Vinculación mediante QR
+
+El PC genera un código QR que puede ser escaneado desde el celular para iniciar la vinculación.
+
+### 🔢 Código convencional
+
+También se mantiene la posibilidad de introducir el código de vinculación manualmente.
+
+### 💡 ¿Qué mejora?
+
+La vinculación se vuelve más sencilla y evita depender de métodos como:
+
+* Bluetooth.
+* Buscar direcciones IP manualmente.
+* Escribir direcciones largas y poco amigables.
+
+> Porque nada dice *"quiero controlar mi PC"* como estar mirando una dirección IP y preguntándote si era `192.168.1.34` o `192.168.1.43`.
+
+Con QR:
+
+**Escanear → vincular → listo.** 📱
+
+Esto permite que ConnectApp pueda establecer la conexión sin exigir al usuario conocimientos sobre redes o configuraciones complicadas.
 
 ---
 
@@ -230,8 +260,30 @@ Y otra muy distinta es conseguir que esas funciones **se comporten como uno espe
 | **7 Sep.**     | Servidor + HTTPS + Cloudflare + Nginx + dominio | ConnectApp obtiene infraestructura propia               |
 | **10 Sep.**    | Primeras pruebas en servidor                    | ConnectApp comienza a funcionar fuera del entorno local |
 | **11–19 Sep.** | Bugs + alertas de desconexión                   | Mejor información cuando ocurre una desconexión         |
-| **20–27 Sep.** | 🚨 **MAJOR UPDATE**                             | Llegan los 3 modos de uso                               |
+| **20–27 Sep.** | 🚨 **MAJOR UPDATE**                             | 3 modos de uso + vinculación mediante QR                |
 | **20–27 Sep.** | Correcciones internas                           | Mejor funcionamiento general                            |
+
+---
+
+# 🔗 Vincular nunca fue tan simple
+
+ConnectApp permite vincular el celular mediante:
+
+### 📷 QR
+
+**Escanear y conectar.**
+
+### 🔢 Código
+
+**Introducir el código y conectar.**
+
+Sin necesidad de depender de:
+
+❌ Bluetooth
+❌ Buscar IPs manualmente
+❌ Escribir direcciones de red interminables
+
+> El usuario quiere controlar el computador, no rendir un examen de redes.
 
 ---
 
@@ -265,8 +317,19 @@ La idea sigue siendo bastante simple:
 
 > **Si ya tienes un dispositivo en la mano, ¿por qué no usarlo para controlar el que está al otro lado de la habitación?**
 
+Sin Bluetooth.
+
+Sin buscar IPs.
+
+Sin levantarte.
+
+Sin buscar el mouse que misteriosamente desapareció.
+
+**Solo tu celular y ConnectApp.** 📱🖥️
+
 Porque sí, técnicamente podrías levantarte.
 
 Pero...
 
-**¿para qué?** 📱
+**¿para qué?**
+SI ESTA CONNECTAPP!
