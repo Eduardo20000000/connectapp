@@ -5,6 +5,7 @@ const handleMouseMovement = require('./utils/handleMouseMovement');
 const tecladoHandler = require('./utils/tecladoHandler');
 const { findPrograms } = require('./utils/findProgramsHandler');
 const PacketBuilder = require('./utils/packetBuilder');
+const uploadBuilder = require('./utils/uploadBuilder');
 let linkCode;
 console.log(`
 ╔═════════════════════════════════════════════════════╗
@@ -89,5 +90,8 @@ QRCode.toString(`https://connectapp.dpdns.org/mobile.html?linkCode=${message.dat
                 }
             }
             websocket.send(JSON.stringify(packet))
+        }
+        if(message.msgType === 12){
+            uploadBuilder(message.data)
         }
  }
