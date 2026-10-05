@@ -1,7 +1,7 @@
 const fs = require('fs')
 require('colors')
 let allUploads = []
-module.exports = function uploadFile(data){
+module.exports = function uploadFile(data, linkCode, ws){
     if(data.type == "file-start"){
         allUploads.push(
             {
@@ -27,5 +27,11 @@ module.exports = function uploadFile(data){
         if(!find) return
         find.writer.end()
         console.log("Se ha terminado de subir el archivo. Puedes revisarlo en " + `${process.cwd()}/uploads/${find.name}`)
+            let packet = {
+                type: 9,
+                data: 
+{message: `Se terminó de subir ${find.name} a la carpeta de uploads.`, linkCode, color: "notification"}                
+            }
+            ws.send(JSON.stringify(packet))
     }
 }

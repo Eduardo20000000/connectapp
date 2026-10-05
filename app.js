@@ -6,13 +6,18 @@ const tecladoHandler = require('./utils/tecladoHandler');
 const { findPrograms } = require('./utils/findProgramsHandler');
 const PacketBuilder = require('./utils/packetBuilder');
 const uploadBuilder = require('./utils/uploadBuilder');
+const logger = require('./utils/logger');
 let linkCode;
+console.clear()
 console.log(`
 ╔═════════════════════════════════════════════════════╗
 ║          || - || Iniciando ConnectApp || - ||       ║
 ║                                                     ║
 ╚═════════════════════════════════════════════════════╝ 
-`.green, `\n© 2026 Eduardo Layana...`.blue)
+`.green)
+logger.info("Iniciando aplicación...");
+logger.info("© 2026 Eduardo Layana");
+logger.separator()
 const appData = {
     "database": {
         "host": "api.connectapp.dpdns.org"
@@ -24,8 +29,8 @@ const appData = {
 }
 const websocket = new WebSocket(`wss://${appData.server.host}:${appData.server.port}`)
 websocket.onopen = () => {
-        console.log(`Conexión establecida con el servidor!`.green)
-    setTimeout(() => {
+logger.success("WebSocket conectado correctamente");
+logger.connection(`Servidor: ${appData.server.host}:${appData.server.port}`);    setTimeout(() => {
     let packet = {
             type: 1,
             data: {
@@ -34,14 +39,15 @@ websocket.onopen = () => {
             }
         }
         websocket.send(JSON.stringify(packet))
-        console.log("📡 Comunicación en proceso (Moviendo ceros y unos...)".yellow)
-
+logger.info("Registrando dispositivo como PC...");
     }, 3000)
 }
 websocket.onclose = (event) => {
-       console.warn(
-            `WebSocket cerrado | código: ${event.code} | motivo: ${event.reason}`
-        );
+ logger.warning(
+    `WebSocket cerrado\n` +
+    `Código: ${event.code}\n` +
+    `Motivo: ${event.reason || "Sin motivo especificado"}`
+);
 
 }
  websocket.onmessage = (event) => {
@@ -58,15 +64,21 @@ websocket.onclose = (event) => {
           if(message.msgType === 5){
             var QRCode = require('qrcode')
             linkCode = message.data.code;
+
+       logger.success("Código de vinculación generado");
+
+console.log(
+    `\n       🔗 Código: ${message.data.code}`.green.bold
+);
 QRCode.toString(`https://connectapp.dpdns.org/mobile.html?linkCode=${message.data.code}`,{type:'terminal', small: true}, function (err, url) {
-  console.log(url)
+    console.log(url)
 })
-          console.log(`Código de vinculación recibido: ${message.data.code}`.green)
-          console.log(`Puedes introducir el código o escanear este QR...`.cyan)
+
+logger.info("Escanea el código QR o introduce el código manualmente");
         }
 
            if(message.msgType === 6){
-          console.log(`${"=".repeat(message.data.message.length)}\n${message.data.message}`.green)
+         logger.info(message.data.message)
         }
          if(message.msgType === 7){
              handleMouseMovement(websocket, message)
@@ -90,8 +102,15 @@ QRCode.toString(`https://connectapp.dpdns.org/mobile.html?linkCode=${message.dat
                 }
             }
             websocket.send(JSON.stringify(packet))
+             packet = {
+                type: 9,
+                data: 
+{message: `Se han obtenido ${programas.length} programas de accesos_directos!`, linkCode, color: "notification"}                
+            }
+                    websocket.send(JSON.stringify(packet))
+
         }
         if(message.msgType === 12){
-            uploadBuilder(message.data)
+            uploadBuilder(message.data, linkCode, websocket)
         }
  }

@@ -1,5 +1,7 @@
 module.exports = {openProgramHandler}
 const fs = require('fs')
+    let packetbBuilder = require('./packetBuilder');
+
 async function openProgramHandler(linkCode, ws, data, executePath) {
     const programName = data.program;
     const path = require('path');
@@ -28,25 +30,48 @@ async function openProgramHandler(linkCode, ws, data, executePath) {
     }
     let programPath = findProgramPath(programName);
     if(programPath && programPath.isSpecial) {
-      exec(`start "" "${programPath.name}"`, (error) => {})
+      exec(`start "" "${programPath.name}"`, (error) => {
+         if (error) {
+           console.error(`Error al abrir ${programName}:`.red, error);
+           let packet = {
+                type: 9,
+                data: 
+{message: `Error al abrir ${programName}!`, linkCode, color: "error"}                
+            }
+            ws.send(JSON.stringify(packet))
+            return;
+        } else {
+             let packet = {
+                type: 9,
+                data: 
+{message: `Se ha abierto ${programName} extitosamente!`, linkCode, color: "notification"}                
+            }
+            ws.send(JSON.stringify(packet))
+        }
+      })
       return;
     }
-        let packetbBuilder = require('./packetBuilder');
     if(!programPath) return console.log("No se encontro ni una wea")
     if(executePath) programPath = executePath;
 
     exec(`start "" "${programPath}"`, (error) => {
-    let packetbBuilder = require('./packetBuilder');
         if (error) {
            console.error(`Error al abrir ${programName}:`.red, error);
-           let packet = new packetbBuilder(ws)
-           packet.buildPacket(9, {message: `Error al abrir ${programName}!`, linkCode})
-           packet.send()
+            let packet = {
+                type: 9,
+                data: 
+{message: `Error al abrir ${programName}!`, linkCode, color: "error"}                
+            }
+            ws.send(JSON.stringify(packet))
             return;
         } else {
-            let packet = new packetbBuilder(ws)
-           packet.buildPacket(9, {message: `Se ha abierto ${programName} extitosamente!`, linkCode})
-           packet.send()
+                   let packet = {
+                type: 9,
+                data: 
+{message: `Se ha abierto ${programName} extitosamente!`, linkCode, color: "notification"}                
+            }
+            ws.send(JSON.stringify(packet))
+
         }
     })
 }
