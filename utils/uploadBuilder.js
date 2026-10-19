@@ -1,5 +1,7 @@
 const fs = require('fs')
 require('colors')
+const logger = require('../utils/logger');
+
 let allUploads = []
 module.exports = function uploadFile(data, linkCode, ws){
     if(data.type == "file-start"){
@@ -12,7 +14,7 @@ module.exports = function uploadFile(data, linkCode, ws){
                 writer: fs.createWriteStream(`${process.cwd()}/uploads/${data.name}`)
             }
         )
-        console.log("Archivo enviado desde celular".yellow)
+     logger.info("Archivo enviado desde celular".yellow)
     }
     if(data.type !== 'file-start' && data.type !== 'file-end'){
         const buffer = Buffer.from(data.chunk, "base64")
@@ -22,15 +24,15 @@ module.exports = function uploadFile(data, linkCode, ws){
         find.writer.write(buffer)
     }
        if(data.type == 'file-end'){
-        //significaclear q hay q finalizar
+        //hay q finalizar
         let find = allUploads.find((x) => x.id === `${data.transferID}`)
         if(!find) return
         find.writer.end()
-        console.log("Se ha terminado de subir el archivo. Puedes revisarlo en " + `${process.cwd()}/uploads/${find.name}`)
+        logger.success("Se ha terminado de subir el archivo. Puedes revisarlo en " + `${process.cwd()}/uploads/${find.name}`)
             let packet = {
                 type: 9,
                 data: 
-{message: `Se terminó de subir ${find.name} a la carpeta de uploads.`, linkCode, color: "notification"}                
+{message: `Se terminó de subir ${find.name} a la carpeta de uploads.`, linkCode, color: "success"}                
             }
             ws.send(JSON.stringify(packet))
     }
