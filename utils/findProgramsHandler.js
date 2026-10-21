@@ -33,5 +33,6 @@ for(let da = 0; da < arrayReal.length; da++){
         name: path.basename(`${arrayReal[da]}`, ".lnk")
     })
 }
+// console.log(returnArray)
 return returnArray;
 }

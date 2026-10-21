@@ -25,10 +25,5 @@ if(data.data.thing.mouseType == 1){
 if(data.data.thing.mouseType == 2){
   await mouse.rightClick()
 }
-if(data.data.thing.mouseType == 3){
-  await mouse.scrollUp(5)
-}
-if(data.data.thing.mouseType == 4){
-  await mouse.scrollDown(5)
-}
+
 }

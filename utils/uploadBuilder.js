@@ -1,32 +1,49 @@
 const fs = require('fs')
 require('colors')
 const logger = require('../utils/logger');
+const cliProgress = require('cli-progress');
 
 let allUploads = []
 module.exports = function uploadFile(data, linkCode, ws){
     if(data.type == "file-start"){
+             logger.info("Archivo enviado desde celular".yellow)
+
+         let bar = new cliProgress.SingleBar({
+                    clearOnComplete: false,
+                    hideCursor: false,
+                    format: "{name} | {bar} | {percentage}%",
+                    
+                }, cliProgress.Presets.shades_grey)
+                bar.start(data.size, 0, {
+                    name: `${data.name})}`
+                })
+                
         allUploads.push(
             {
                 id: data.transferID,
                 mimetype: data.mimetype,
                 size: data.size,
                 name: data.name,
-                writer: fs.createWriteStream(`${process.cwd()}/uploads/${data.name}`)
+                writer: fs.createWriteStream(`${process.cwd()}/uploads/${data.name}`),
+                bar: bar
+               
             }
         )
-     logger.info("Archivo enviado desde celular".yellow)
+
     }
     if(data.type !== 'file-start' && data.type !== 'file-end'){
         const buffer = Buffer.from(data.chunk, "base64")
         //significa q hay q escribir D:
         let find = allUploads.find((x) => x.id === `${data.transferID}`)
         if(!find) return
+        find.bar.increment(buffer.length)
         find.writer.write(buffer)
     }
        if(data.type == 'file-end'){
         //hay q finalizar
         let find = allUploads.find((x) => x.id === `${data.transferID}`)
         if(!find) return
+        find.bar.stop()
         find.writer.end()
         logger.success("Se ha terminado de subir el archivo. Puedes revisarlo en " + `${process.cwd()}/uploads/${find.name}`)
             let packet = {
